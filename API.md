@@ -343,7 +343,7 @@
                     "type": "yt_channel",
                     "code": "__SEFSclF58",
                     "title": "影片標題",
-                    "image": "http://.../banner.gif",
+                    "image": "http://<TEST_HOST>/upload/yoyotv/img/banner.gif",
                     "is_new": "Y"
                 }
             ]
@@ -392,21 +392,20 @@
         ],
         "video_banner": {
             "banner_portrait_video_image": "",
-            "banner_landscape_image": ""
+            "banner_landscape_image": "",
+            "banner_url": ""
         },
         "list": [
             {
                 "type": "ytvideo",
                 "code": "-8hHVZ5jI9c",
                 "image": "https://i.ytimg.com/vi/-8hHVZ5jI9c/maxresdefault.jpg",
-                "banner_portrait_url": "https://yoyotv.ebc.net.tw",
-                "banner_landscape_url": "https://yoyotv.ebc.net.tw",
                 "title": "美妙寵物光之美少女"
             }
         ]
     }
 }
 ```
-> `type` 支援 `ytvideo` / `dfp`（`banner` 已從 type 移除，改由 `video_banner` 物件與 list item 的 `banner_*_url` 承載）。
-> `video_banner` 為單一物件（非陣列），提供 banner 直式/橫式圖片；list item 的 `banner_portrait_url` / `banner_landscape_url` 則對應直式/橫式圖片連結。
-> 目前 2026 影音詳細頁主要處理 `ytvideo`；`dfp` 及 `banner_*` 欄位保留供後續使用。
+> `type` 支援 `ytvideo` / `dfp`（`banner` 已從 type 移除，改由 `video_banner` 物件承載）。
+> `video_banner` 為單一物件（非陣列），提供 banner 直式/橫式圖片與單一 `banner_url` 連結（直式/橫式共用同一個連結，不再分開）。
+> 目前 2026 影音詳細頁主要處理 `ytvideo`；`dfp` 及 `video_banner` 欄位保留供後續使用。
