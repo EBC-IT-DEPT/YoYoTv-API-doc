@@ -385,15 +385,14 @@
         "player_list_desc": "播放清單說明",
         "video_topic_main_code": "194",
         "video_topic_sub_code": "",
-        "video_ad": [
-            {
-                "video_ad_url": "https://yoyotv.ebc.net.tw/video"
-            }
-        ],
         "video_banner": {
             "banner_portrait_video_image": "",
             "banner_landscape_image": "",
             "banner_url": ""
+        },
+        "video_ad_setting": {
+            "Show_After_Count": 1,
+            "First_Show_Seq": 1
         },
         "list": [
             {
@@ -408,4 +407,30 @@
 ```
 > `type` 支援 `ytvideo` / `dfp`（`banner` 已從 type 移除，改由 `video_banner` 物件承載）。
 > `video_banner` 為單一物件（非陣列），提供 banner 直式/橫式圖片與單一 `banner_url` 連結（直式/橫式共用同一個連結，不再分開）。
-> 目前 2026 影音詳細頁主要處理 `ytvideo`；`dfp` 及 `video_banner` 欄位保留供後續使用。
+> `video_ad_setting`：mp4 廣告顯示規則。`Show_After_Count` = 每看幾支影片後顯示一次廣告（0~9）；`First_Show_Seq` = 第幾支影片後第一次顯示廣告。
+> 目前 2026 影音詳細頁主要處理 `ytvideo`；`dfp`、`video_banner`、`video_ad_setting` 欄位保留供後續使用。
+
+## 11. video_ad（YT 播放前的廣告）
+
+**Request**
+```json
+{
+    "request": "video_ad",
+    "platform": "ios",
+    "ip_address": ""
+}
+```
+
+**Response data**：`VideoAdData`
+```json
+{
+    "response": "video_ad",
+    "platform": "ios",
+    "result": "success",
+    "message": "",
+    "data": {
+        "video_ad_url": "https://yoyotv.ebc.net.tw/video"
+    }
+}
+```
+> `video_ad_url`：YT 播放前的廣告影片網址。
