@@ -58,38 +58,7 @@
 
 ---
 
-## 2. dfp（首頁廣告 / Google AD）
-
-**Request**
-```json
-{
-    "request": "dfp",
-    "platform": "ios",
-    "ip_address": "",
-    "param": {
-        "type": "string"
-    }
-}
-```
-
-**Response data**：`HomeADData`
-```json
-{
-    "response": "dfp",
-    "platform": "ios",
-    "result": "success",
-    "message": "",
-    "data": {
-        "code": "/xxxx/yoyotv_app_banner",
-        "size": ["320", "50"],
-        "show": "1"
-    }
-}
-```
-
----
-
-## 3. flash_list（快訊）
+## 2. flash_list（快訊）
 
 **Request**
 ```json
@@ -126,7 +95,7 @@
 
 ---
 
-## 4. home_video_list（首頁影片區塊）
+## 3. home_video_list（首頁影片區塊）
 
 **Request**
 ```json
@@ -164,7 +133,7 @@
 
 ---
 
-## 5. video_tab_list（首頁分類 Tab）
+## 4. video_tab_list（首頁分類 Tab）
 
 **Request**
 ```json
@@ -194,7 +163,7 @@
 
 ---
 
-## 6. top_banner_list（首頁推薦）
+## 5. top_banner_list（首頁推薦）
 
 **Request**
 ```json
@@ -235,7 +204,7 @@
 
 ---
 
-## 7. video_recommend_list（影音頁 YOYO推薦）
+## 6. video_recommend_list（影音頁 YOYO推薦）
 
 **Request**
 ```json
@@ -272,7 +241,7 @@
 
 ---
 
-## 8. featured_video_list（影音頁主打輪播）
+## 7. featured_video_list（影音頁主打輪播）
 
 **Request**
 ```json
@@ -310,7 +279,7 @@
 
 ---
 
-## 9. tab_show_video_list（影音頁分類影片區塊）
+## 8. tab_show_video_list（影音頁分類影片區塊）
 
 **Request**
 ```json
@@ -357,7 +326,7 @@
 
 ---
 
-## 10. video_detail_list（影音頁播放清單內容）
+## 9. video_detail_list（影音頁播放清單內容）
 
 **Request**
 ```json
@@ -410,7 +379,7 @@
 > `video_ad_setting`：mp4 廣告顯示規則。`Show_After_Count` = 每看幾支影片後顯示一次廣告（0~9）；`First_Show_Seq` = 第幾支影片後第一次顯示廣告。
 > 目前 2026 影音詳細頁主要處理 `ytvideo`；`dfp`、`video_banner`、`video_ad_setting` 欄位保留供後續使用。
 
-## 11. video_ad（YT 播放前的廣告）
+## 10. video_ad（YT 播放前的廣告）
 
 **Request**
 ```json
