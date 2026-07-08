@@ -52,9 +52,13 @@
             "image": "http://.../banner.jpg",
             "url": ""
         }
-    ]
+    ] 
 }
 ```
+> `id`：Banner ID。
+> `title`：Banner 標題。
+> `image`：Banner 圖片。
+> `url`：Banner URL。
 
 ---
 
@@ -91,6 +95,15 @@
     ]
 }
 ```
+> `type`：類型。
+> `code`：新聞 ID。
+> `title`：新聞標題。
+> `url`：連結網址。
+> `app_event_type`：推播類型，1 為專屬活動、2 為集點活動。
+> `ask_id`：問題 ID。
+> `point_id`：點數活動 ID。
+> `ask_title`：問題名稱。
+> `app_event_id`：app 活動 ID。
 > `app_event_type` / `ask_id` / `point_id` / `ask_title` / `app_event_id` 為選填。
 
 ---
@@ -115,21 +128,27 @@
     "message": "",
     "data": [
         {
-            "code": "46",
-            "name": "YOYO強打卡通",
-            "total_count": 3,
+            "video_topic_main_code": "46",
+            "video_topic_sub_code": "1",
+            "name": "test-影片對應 創意大發現",
+            "total_count": 5,
             "list": [
                 {
-                    "type": "yt_list",
-                    "code": "test-list-1",
+                    "type": "yt_channel",
+                    "code": "__SEFSclF58",
                     "title": "影片標題",
-                    "image": "http://.../cover.jpg"
+                    "image": "http://<TEST_HOST>/upload/yoyotv/img/banner.gif",
+                    "is_new": "Y"
                 }
             ]
         }
     ]
 }
 ```
+> `video_topic_main_code`：Video_Topic 的 VTOPIC_ID。
+> `name`：影片名稱或播放清單名稱（Video_Topic 的 VTOPIC_Name）。
+> `type` 支援 `yt_channel` / `yt_list` / `single_video`。`single_video` 的 `code` 為主機影片路徑或 VIDEO_CODE；YT 類型的 `code` 為 YOUTUBE_ID。
+> `is_new`：`Y` 為最新上線、`N` 為否。
 
 ---
 
@@ -312,6 +331,7 @@
                     "type": "yt_channel",
                     "code": "__SEFSclF58",
                     "title": "影片標題",
+                    "video_desc": "影片說明",
                     "image": "http://<TEST_HOST>/upload/yoyotv/img/banner.gif",
                     "is_new": "Y"
                 }
@@ -376,7 +396,7 @@
 ```
 > `type` 支援 `ytvideo` / `dfp`（`banner` 已從 type 移除，改由 `video_banner` 物件承載）。
 > `video_banner` 為單一物件（非陣列），提供 banner 直式/橫式圖片與單一 `banner_url` 連結（直式/橫式共用同一個連結，不再分開）。
-> `video_ad_setting`：mp4 廣告顯示規則。`Show_After_Count` = 每看幾支影片後顯示一次廣告（0~9）；`First_Show_Seq` = 第幾支影片後第一次顯示廣告。
+> `video_ad_setting`：mp4 廣告顯示規則。`Show_After_Count` = 每看幾支影片後顯示一次廣告（0~9）；`First_Show_Seq` = 0:無 1:前 2:後。
 > 目前 2026 影音詳細頁主要處理 `ytvideo`；`dfp`、`video_banner`、`video_ad_setting` 欄位保留供後續使用。
 
 ## 10. video_ad（YT 播放前的廣告）
@@ -403,3 +423,79 @@
 }
 ```
 > `video_ad_url`：YT 播放前的廣告影片網址。
+
+---
+
+## 11. cava_news_slider_list（造咖親子專欄文章輪播，最新 5 則）
+
+**Request**
+```json
+{
+    "request": "cava_news_slider_list",
+    "platform": "ios",
+    "ip_address": ""
+}
+```
+
+**Response data**：`[ColumnNewsSliderData]`
+```json
+{
+    "response": "cava_news_slider_list",
+    "platform": "ios",
+    "result": "success",
+    "message": "",
+    "data": [
+        {
+            "code": "19",
+            "title": "專欄文章標題",
+            "image": "http://<TEST_HOST>/upload/yoyotv/img/banner.jpg",
+            "url": "",
+            "is_ad": "N"
+        }
+    ]
+}
+```
+> `code`：新聞 ID。
+> `title`：新聞標題。
+> `image`：新聞圖片。
+> `url`：新聞 URL 或廣告 URL。
+> `is_ad`：是否為廣告，`Y` 為是、`N` 為否。
+
+---
+
+## 12. cava_news_list（造咖親子專欄文章清單）
+
+**Request**
+```json
+{
+    "request": "cava_news_list",
+    "platform": "ios",
+    "ip_address": ""
+}
+```
+
+**Response data**：`[ColumnNewsData]`
+```json
+{
+    "response": "cava_news_list",
+    "platform": "ios",
+    "result": "success",
+    "message": "",
+    "data": [
+        {
+            "type": "news",
+            "code": "19",
+            "title": "專欄文章標題",
+            "image": "http://<TEST_HOST>/upload/yoyotv/img/banner.jpg",
+            "url": "",
+            "date": "2026.05.05"
+        }
+    ]
+}
+```
+> `type`：文章類型，`news` 為專欄文章、`dfp` 為廣告 Banner。
+> `code`：文章 ID 或 dfp code。
+> `title`：文章標題或 Banner 標題。
+> `image`：文章圖片或 Banner 圖片。
+> `url`：新聞 URL 或 Banner URL。
+> `date`：文章日期（選填，`dfp` 廣告列可為空）。
