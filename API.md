@@ -149,7 +149,8 @@
                     "type": "yt_list",
                     "code": "test-list-1",
                     "title": "影片標題",
-                    "image": "http://.../cover.jpg"
+                    "image": "http://.../cover.jpg",
+                    "isNew": true
                 }
             ]
         }
@@ -163,6 +164,7 @@
 > `data[].list[].code`：影片或播放清單代碼。
 > `data[].list[].title`：影片標題。
 > `data[].list[].image`：影片封面圖片網址。
+> `data[].list[].isNew`：是否為新影片。
 
 ---
 
