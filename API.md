@@ -508,6 +508,88 @@
 
 ---
 
+## 11. cava_news_slider_list（造咖親子專欄文章輪播）
+
+最新 5 則。
+
+**Request**
+```json
+{
+    "request": "cava_news_slider_list",
+    "platform": "ios",
+    "ip_address": ""
+}
+```
+> `request`：API 名稱，固定為 `cava_news_slider_list`。
+> `platform`：呼叫平台，目前 App 使用 `ios`。
+> `ip_address`：裝置目前的 IP 位址，無法取得時傳空字串。
+
+**Response data**：`[CavaNewsSliderData]`
+```json
+{
+    "response": "cava_news_slider_list",
+    "platform": "ios",
+    "result": "success",
+    "message": "",
+    "data": [
+        {
+            "code": "19",
+            "title": "",
+            "image": "http://.../banner.jpg",
+            "url": "",
+            "is_ad": "N"
+        }
+    ]
+}
+```
+> `data[].code`：新聞 ID。
+> `data[].title`：新聞標題。
+> `data[].image`：新聞圖片網址。
+> `data[].url`：新聞 URL 或廣告 URL。
+> `data[].is_ad`：是否為廣告，`Y` 是、`N` 否。
+
+---
+
+## 12. cava_news_list（造咖親子專欄文章清單）
+
+**Request**
+```json
+{
+    "request": "cava_news_list",
+    "platform": "ios",
+    "ip_address": ""
+}
+```
+> `request`：API 名稱，固定為 `cava_news_list`。
+> `platform`：呼叫平台，目前 App 使用 `ios`。
+> `ip_address`：裝置目前的 IP 位址，無法取得時傳空字串。
+
+**Response data**：`[CavaNewsData]`
+```json
+{
+    "response": "cava_news_list",
+    "platform": "ios",
+    "result": "success",
+    "message": "",
+    "data": [
+        {
+            "type": "news",
+            "code": "19",
+            "title": "",
+            "image": "http://.../banner.jpg",
+            "url": ""
+        }
+    ]
+}
+```
+> `data[].type`：文章類型，`news` 文章或 `dfp` 廣告。
+> `data[].code`：文章 ID 或 dfp code。
+> `data[].title`：文章標題或 Banner 標題。
+> `data[].image`：文章圖片或 Banner 圖片網址。
+> `data[].url`：新聞 URL 或 Banner URL。
+
+---
+
 ## 13. app_event_content（APP 專屬活動內容）
 
 **API Path**：`/api/mobileapi/app_event_content`
