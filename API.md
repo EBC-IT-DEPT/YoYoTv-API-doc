@@ -268,35 +268,34 @@
 > `platform`：呼叫平台，目前 App 使用 `ios`。
 > `ip_address`：裝置目前的 IP 位址，無法取得時傳空字串。
 
-**Response data**：`VideoRecommendListData`
+**Response data**：`[VideoRecommendData]`
 ```json
 {
     "response": "video_recommend_list",
     "platform": "ios",
     "result": "success",
     "message": "",
-    "data": {
-        "list": [
-            {
-                "video_tab_code": "1",
-                "type": "yt_channel",
-                "video_topic_main_code": "194",
-                "video_topic_sub_code": "",
-                "image": "https://i.ytimg.com/vi/-8hHVZ5jI9c/maxresdefault.jpg",
-                "title": "美妙寵物光之美少女",
-                "is_new": "Y"
-            }
-        ]
-    }
+    "data": [
+        {
+            "video_tab_code": "1",
+            "type": "yt_channel",
+            "video_topic_main_code": "194",
+            "video_topic_sub_code": "",
+            "image": "https://i.ytimg.com/vi/-8hHVZ5jI9c/maxresdefault.jpg",
+            "title": "美妙寵物光之美少女",
+            "is_new": "Y"
+        }
+    ]
 }
 ```
-> `data.list[].video_tab_code`：影音分類 ID。
-> `data.list[].type`：影片類型。
-> `data.list[].video_topic_main_code`：影片主分類 ID。
-> `data.list[].video_topic_sub_code`：影片子分類 ID，未設定時為空字串。
-> `data.list[].image`：影片封面圖片網址。
-> `data.list[].title`：影片標題。
-> `data.list[].is_new`：是否最新上線；`Y` 顯示「最新上線」標籤，`N` 不顯示。
+> `data` 直接是陣列（沒有 `list` 外層物件）。
+> `data[].video_tab_code`：影音分類 ID（Video_Tab 的 Video_Tab_ID）。
+> `data[].type`：影片類型，支援 `yt_channel` / `yt_list` / `single_video`。
+> `data[].video_topic_main_code`：影片主分類 ID。
+> `data[].video_topic_sub_code`：影片子分類 ID，未設定時為空字串。
+> `data[].image`：影片封面圖片網址。
+> `data[].title`：影片標題。
+> `data[].is_new`：是否最新上線；`Y` 顯示「最新上線」標籤，`N` 不顯示。
 
 ---
 
@@ -318,7 +317,7 @@
 > `ip_address`：裝置目前的 IP 位址，無法取得時傳空字串。
 > `param.video_tab_code`：影音分類 ID。
 
-**Response data**：`VideoFeaturedListData`
+**Response data**：`VideoFeaturedData`
 ```json
 {
     "response": "featured_video_list",
@@ -326,25 +325,22 @@
     "result": "success",
     "message": "",
     "data": {
-        "list": [
-            {
-                "video_tab_code": "1",
-                "type": "yt_list",
-                "video_topic_main_code": "194",
-                "video_topic_sub_code": "",
-                "image": "https://i.ytimg.com/vi/-8hHVZ5jI9c/maxresdefault.jpg",
-                "title": "美妙寵物光之美少女"
-            }
-        ]
+        "video_tab_code": "1",
+        "type": "yt_list",
+        "video_topic_main_code": "194",
+        "video_topic_sub_code": "",
+        "image": "https://i.ytimg.com/vi/-8hHVZ5jI9c/maxresdefault.jpg",
+        "title": "美妙寵物光之美少女"
     }
 }
 ```
-> `data.list[].video_tab_code`：影音分類 ID。
-> `data.list[].type`：影片類型。
-> `data.list[].video_topic_main_code`：影片主分類 ID。
-> `data.list[].video_topic_sub_code`：影片子分類 ID，未設定時為空字串。
-> `data.list[].image`：主打影片封面圖片網址。
-> `data.list[].title`：主打影片標題。
+> `data` 直接是單一物件（不再有 `list` 外層陣列，主打只有一則）。
+> `data.video_tab_code`：影音分類 ID（Video_Tab 的 Video_Tab_ID）。
+> `data.type`：影片類型，支援 `yt_channel` / `yt_list` / `single_video`。
+> `data.video_topic_main_code`：影片主分類 ID。
+> `data.video_topic_sub_code`：影片子分類 ID，未設定時為空字串。
+> `data.image`：主打影片封面圖片網址。
+> `data.title`：主打影片標題。
 
 ---
 
@@ -692,3 +688,222 @@
 > `events.is_opened`：活動於當前時間是否已開放，值為 `Y` / `N`。
 > `events.description`：對應網頁活動的摘要文字，未設定時為空字串。
 > `events.image`：對應網頁活動的封面圖，未設定時為空字串。
+
+---
+
+## 15. video_category_list（搜尋影音分類）
+
+依關鍵字搜尋符合的影音分類與廣告項目。
+
+**Request**
+```json
+{
+    "request": "video_category_list",
+    "platform": "ios",
+    "ip_address": "10.x.x.x",
+    "language": "1",
+    "param": {
+        "keyword": "apple"
+    }
+}
+```
+> `request`：API 名稱，固定為 `video_category_list`。
+> `platform`：呼叫平台，目前 App 使用 `ios`。
+> `ip_address`：裝置目前的 IP 位址，無法取得時傳空字串。
+> `language`：語系代碼，目前傳入 `1`。
+> `param.keyword`：使用者送出的搜尋關鍵字。
+
+**Response data**：`[SearchCategoryData]`
+```json
+{
+    "response": "video_category_list",
+    "platform": "ios",
+    "result": "success",
+    "message": "",
+    "data": [
+        {
+            "type": "playlist",
+            "code": "35",
+            "name": "YOYO點點名",
+            "dfp_size": null,
+            "dfp_sort": 0,
+            "dfp_code": null
+        },
+        {
+            "type": "dfp",
+            "code": "",
+            "name": "",
+            "dfp_size": [
+                "320x100"
+            ],
+            "dfp_sort": 2,
+            "dfp_code": "/21959889555/09.YOYOTV_VPAGE_APP1"
+        },
+        {
+            "type": "playlist",
+            "code": "28",
+            "name": "YOYOMAN專區",
+            "dfp_size": null,
+            "dfp_sort": 0,
+            "dfp_code": null
+        },
+        {
+            "type": "dfp",
+            "code": "",
+            "name": "",
+            "dfp_size": [
+                "300x250"
+            ],
+            "dfp_sort": 4,
+            "dfp_code": "/21959889555/09.YOYOTV_VPAGE_APP2"
+        },
+        {
+            "type": "ytvideo",
+            "code": "25",
+            "name": "YOYO頻道有獎活動",
+            "dfp_size": null,
+            "dfp_sort": 0,
+            "dfp_code": null
+        },
+        {
+            "type": "playlist",
+            "code": "18",
+            "name": "YOYOMAN專區(有子分類）",
+            "dfp_size": null,
+            "dfp_sort": 0,
+            "dfp_code": null
+        }
+    ]
+}
+```
+> `data[].type`：搜尋結果類型，例如 `playlist`、`ytvideo` 或 `dfp`。
+> `data[].code`：影音分類或影片代碼；`dfp` 項目可能為空字串。
+> `data[].name`：影音分類或影片名稱；`dfp` 項目可能為空字串。
+> `data[].dfp_size`：DFP 廣告尺寸陣列；非廣告項目為 `null`。
+> `data[].dfp_sort`：DFP 廣告插入排序位置；非廣告項目為 `0`。
+> `data[].dfp_code`：DFP 廣告單元代碼；非廣告項目為 `null`。
+
+---
+
+## 16. video_play_list（搜尋播放清單）
+
+當 `video_category_list` 回傳項目的 `type` 為 `playlist` 時，依分類代碼與關鍵字取得子播放清單。分頁參數由 API 預設為 `paging=1`、`request_count=250`，App 不需傳入。
+
+**Request**
+```json
+{
+    "request": "video_play_list",
+    "platform": "ios",
+    "ip_address": "10.x.x.x",
+    "param": {
+        "code": "35",
+        "keyword": "apple"
+    }
+}
+```
+> `request`：API 名稱，固定為 `video_play_list`。
+> `platform`：呼叫平台，目前 App 使用 `ios`。
+> `ip_address`：裝置目前的 IP 位址，無法取得時傳空字串。
+> `param.code`：`video_category_list` 回傳的分類代碼。
+> `param.keyword`：使用者送出的搜尋關鍵字。
+
+**Response data**：`VideoPlayListClass`
+```json
+{
+    "response": "video_play_list",
+    "platform": "ios",
+    "result": "success",
+    "message": "",
+    "data": {
+        "total_count": 2,
+        "list": [
+            {
+                "video_topic_main_code": "35",
+                "video_topic_sub_code": "45",
+                "type": "ytlist",
+                "code": "45",
+                "image": "https://i.ytimg.com/vi/B2WRd-l8uzs/maxresdefault.jpg",
+                "title": "【YOYOMAN小學堂】",
+                "count": 1
+            },
+            {
+                "video_topic_main_code": "35",
+                "video_topic_sub_code": "43",
+                "type": "ytlist",
+                "code": "43",
+                "image": "https://i.ytimg.com/vi/B2WRd-l8uzs/maxresdefault.jpg",
+                "title": "test2",
+                "count": 1
+            }
+        ]
+    }
+}
+```
+> `data.total_count`：符合條件的播放清單總數。
+> `data.list[].video_topic_main_code`：影片主分類 ID，對應 `Video_Topic.VTOPIC_ID`。
+> `data.list[].video_topic_sub_code`：影片子分類 ID，對應 `Video_Topic_Sub.VTOPIC_SUB_ID`。
+> `data.list[].type`：播放清單類型，例如 `ytlist` 或 `nativelist`。
+> `data.list[].code`：子播放清單代碼。
+> `data.list[].image`：播放清單代表圖片。
+> `data.list[].title`：播放清單標題。
+> `data.list[].count`：播放清單內的影片數量。
+
+---
+
+## 17. video_list（搜尋單則影片）
+
+當 `video_category_list` 回傳項目的 `type` 為 `ytvideo` 或 `nativevideo` 時，依影片類型、分類代碼與關鍵字取得影片。分頁參數由 API 預設為 `paging=1`、`request_count=250`，App 不需傳入。
+
+**Request**
+```json
+{
+    "request": "video_list",
+    "platform": "ios",
+    "ip_address": "10.x.x.x",
+    "param": {
+        "type": "ytvideo",
+        "code": "25",
+        "keyword": "apple"
+    }
+}
+```
+> `request`：API 名稱，固定為 `video_list`。
+> `platform`：呼叫平台，目前 App 使用 `ios`。
+> `ip_address`：裝置目前的 IP 位址，無法取得時傳空字串。
+> `param.type`：影片類型，目前支援 `ytvideo` 與 `nativevideo`。
+> `param.code`：`video_category_list` 回傳的分類代碼。
+> `param.keyword`：使用者送出的搜尋關鍵字。
+
+**Response data**：`VideoListClass`
+```json
+{
+    "response": "video_list",
+    "platform": "ios",
+    "result": "success",
+    "message": "",
+    "data": {
+        "type": "ytvideo",
+        "list": [
+            {
+                "video_topic_main_code": "25",
+                "video_topic_sub_code": "",
+                "code": "i20GPsVPtDM",
+                "title": "【#有獎活動】 YOYO集點卡哇送大獎Apple Watch｜12/2(一)-12/19(四)｜YOYOTV",
+                "image": "https://i.ytimg.com/vi/i20GPsVPtDM/maxresdefault.jpg",
+                "length": "00:00:21",
+                "shop_link": ""
+            }
+        ],
+        "total_count": 1
+    }
+}
+```
+> `data.type`：影片類型，例如 `ytvideo` 或 `nativevideo`。
+> `data.total_count`：符合條件的影片總數。
+> `data.list[].video_topic_main_code`：影片主分類 ID，對應 `Video_Topic.VTOPIC_ID`。
+> `data.list[].video_topic_sub_code`：影片子分類 ID，對應 `Video_Topic_Sub.VTOPIC_SUB_ID`。
+> `data.list[].code`：YouTube 影片代碼或原生影片網址。
+> `data.list[].title`：影片標題。
+> `data.list[].image`：影片縮圖。
+> `data.list[].length`：影片長度，格式為 `HH:mm:ss`。
+> `data.list[].shop_link`：影片導購連結，未設定時為空字串。
