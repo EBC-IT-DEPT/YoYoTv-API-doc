@@ -382,7 +382,7 @@
                     "code": "__SEFSclF58",
                     "title": "影片標題",
                     "video_desc": "影片說明",
-                    "image": "http://.../banner.gif",
+                    "image": "http://<TEST_HOST>/upload/yoyotv/img/banner.gif",
                     "is_new": "Y"
                 }
             ]
@@ -435,23 +435,27 @@
         "total_count": 28,
         "player_list_name": "播放清單名稱",
         "player_list_desc": "播放清單說明",
-        "video_topic_main_code": "194",
+        "video_topic_main_code": 194,
         "video_topic_sub_code": "",
         "video_banner": {
-            "banner_portrait_video_image": "",
+            "banner_portrait_video_imag": "",
             "banner_landscape_image": "",
-            "banner_url": ""
+            "banner_url": "",
+            "banner_code": 1
         },
         "video_ad_setting": {
-            "Show_After_Count": 1,
-            "First_Show_Seq": 1
+            "Show_After_Count": "5",
+            "First_Show_Seq": "1"
         },
         "list": [
             {
                 "type": "ytvideo",
                 "code": "-8hHVZ5jI9c",
                 "image": "https://i.ytimg.com/vi/-8hHVZ5jI9c/maxresdefault.jpg",
-                "title": "美妙寵物光之美少女"
+                "url": "https://www.youtube.com/watch?v=-8hHVZ5jI9c",
+                "title": "美妙寵物光之美少女",
+                "video_desc": "影片說明",
+                "dfp_size": []
             }
         ]
     }
@@ -460,19 +464,22 @@
 > `data.total_count`：播放清單項目總數。
 > `data.player_list_name`：播放清單名稱。
 > `data.player_list_desc`：播放清單說明。
-> `data.video_topic_main_code`：影片主分類 ID。
+> `data.video_topic_main_code`：影片主分類 ID，型別為整數，對應 `Video_Topic.VTOPIC_ID`。
 > `data.video_topic_sub_code`：影片子分類 ID。
 > `data.video_banner`：單一 Banner 物件，非陣列。
-> `data.video_banner.banner_portrait_video_image`：直式 Banner 圖片網址。
+> `data.video_banner.banner_portrait_video_imag`：直式 Banner 圖片網址；目前後端實際欄位少一個 `e`，App 同時相容 `banner_portrait_video_image`。
 > `data.video_banner.banner_landscape_image`：橫式 Banner 圖片網址。
 > `data.video_banner.banner_url`：直式與橫式 Banner 共用的點擊網址。
-> `data.video_ad_setting.Show_After_Count`：每觀看幾支影片後顯示一次 mp4 廣告，範圍為 `0`～`9`。
-> `data.video_ad_setting.First_Show_Seq`：廣告首次出現位置；`0` 無、`1` 片頭、`2` 片尾。
-> `data.list[].type`：支援 `ytvideo` / `dfp`；Banner 已改由 `video_banner` 物件承載。
-> `data.list[].code`：YouTube 影片 ID 或對應項目代碼。
+> `data.video_banner.banner_code`：Banner SID，型別為整數。
+> `data.video_ad_setting.Show_After_Count`：每觀看幾支影片後顯示一次 mp4 廣告，API 目前回傳數字字串，範圍為 `0`～`9`，App 轉為 `Int`。
+> `data.video_ad_setting.First_Show_Seq`：廣告首次出現位置，API 目前回傳數字字串；`0` 無、`1` 片頭、`2` 片尾，App 轉為 `Int`。
+> `data.list[].type`：影片類型，支援 `ytvideo`、`nativevideo` 或 `dfp`。
+> `data.list[].code`：YouTube 影片 ID、Banner ID 或 DFP code。
 > `data.list[].image`：影片封面圖片網址。
+> `data.list[].url`：影片或項目的連結。
 > `data.list[].title`：影片標題。
-> `2026 App 支援狀態`：目前影音詳細頁主要處理 `ytvideo`；`dfp`、`video_banner`、`video_ad_setting` 保留供後續使用。
+> `data.list[].video_desc`：影片說明，未設定時可為空字串或 `null`。
+> `data.list[].dfp_size`：DFP 廣告尺寸陣列，非 DFP 項目可回傳空陣列或 `null`。
 
 ## 10. video_ad（YT 播放前的廣告）
 
@@ -807,7 +814,7 @@
 > `param.code`：`video_category_list` 回傳的分類代碼。
 > `param.keyword`：使用者送出的搜尋關鍵字。
 
-**Response data**：`VideoPlayListClass`
+**Response data**：`SearchVideoPlayListData`
 ```json
 {
     "response": "video_play_list",
@@ -874,7 +881,7 @@
 > `param.code`：`video_category_list` 回傳的分類代碼。
 > `param.keyword`：使用者送出的搜尋關鍵字。
 
-**Response data**：`VideoListClass`
+**Response data**：`SearchVideoListData`
 ```json
 {
     "response": "video_list",
