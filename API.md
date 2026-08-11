@@ -191,13 +191,13 @@
     "message": "",
     "data": [
         {
-            "code": "1",
+            "video_tab_code": "1",
             "name": "熱門"
         }
     ]
 }
 ```
-> `data[].code`：影音分類 ID，對應 `Video_Tab.Video_TAB_ID`。
+> `data[].video_tab_code`：影音分類 ID，對應 `Video_Tab.Video_TAB_ID`。
 > `data[].name`：影音分類名稱。
 
 ---
@@ -382,7 +382,7 @@
                     "code": "__SEFSclF58",
                     "title": "影片標題",
                     "video_desc": "影片說明",
-                    "image": "http://<TEST_HOST>/upload/yoyotv/img/banner.gif",
+                    "image": "http://.../banner.gif",
                     "is_new": "Y"
                 }
             ]
@@ -580,16 +580,32 @@
             "code": "19",
             "title": "",
             "image": "http://.../banner.jpg",
-            "url": ""
+            "url": "",
+            "dfp_size": null,
+            "is_ad": "N"
+        },
+        {
+            "type": "dfp",
+            "code": "/21959889555/09.YOYOTV_COLUMN_APP",
+            "title": "Banner",
+            "image": "http://.../banner.jpg",
+            "url": "",
+            "dfp_size": [
+                "100x100",
+                "100x50"
+            ],
+            "is_ad": "Y"
         }
     ]
 }
 ```
 > `data[].type`：文章類型，`news` 文章或 `dfp` 廣告。
-> `data[].code`：文章 ID 或 dfp code。
+> `data[].code`：文章 ID；`type` 為 `dfp` 時，`code` 為 DFP 廣告單元代碼（取代 `dfp_code`）。
 > `data[].title`：文章標題或 Banner 標題。
 > `data[].image`：文章圖片或 Banner 圖片網址。
 > `data[].url`：新聞 URL 或 Banner URL。
+> `data[].dfp_size`：DFP 廣告尺寸陣列，例如 `100x100`、`100x50`；非 DFP 項目為 `null`。
+> `data[].is_ad`：是否為一般廣告，`Y` 是、`N` 否。
 
 ---
 
@@ -914,3 +930,41 @@
 > `data.list[].image`：影片縮圖。
 > `data.list[].length`：影片長度，格式為 `HH:mm:ss`。
 > `data.list[].shop_link`：影片導購連結，未設定時為空字串。
+
+---
+
+## 18. video_shorts_list（Shorts 影音列表）
+
+取得 Shorts 短影音清單。
+
+**Request**
+```json
+{
+    "request": "video_shorts_list",
+    "platform": "ios",
+    "ip_address": "10.x.x.x"
+}
+```
+> `request`：API 名稱，固定為 `video_shorts_list`。
+> `platform`：呼叫平台，目前 App 使用 `ios`。
+> `ip_address`：裝置目前的 IP 位址，無法取得時傳空字串。
+
+**Response data**：`VideoShortsListData`
+```json
+{
+    "response": "video_shorts_list",
+    "platform": "ios",
+    "result": "success",
+    "message": "",
+    "data": [
+        {
+            "code": "yt影音code",
+            "title": "影片標題",
+            "video_desc": "影片描述"
+        }
+    ]
+}
+```
+> `data[].code`：YouTube 影片代碼。
+> `data[].title`：影片標題。
+> `data[].video_desc`：影片描述。
