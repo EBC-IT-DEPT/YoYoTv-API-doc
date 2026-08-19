@@ -581,8 +581,7 @@
             "title": "",
             "image": "http://.../banner.jpg",
             "url": "",
-            "dfp_size": null,
-            "is_ad": "N"
+            "dfp_size": null
         },
         {
             "type": "dfp",
@@ -593,19 +592,25 @@
             "dfp_size": [
                 "100x100",
                 "100x50"
-            ],
-            "is_ad": "Y"
+            ]
+        },
+        {
+            "type": "ad",
+            "code": "20",
+            "title": "Banner",
+            "image": "http://.../banner.jpg",
+            "url": "https://example.com/",
+            "dfp_size": null
         }
     ]
 }
 ```
-> `data[].type`：文章類型，`news` 文章或 `dfp` 廣告。
-> `data[].code`：文章 ID；`type` 為 `dfp` 時，`code` 為 DFP 廣告單元代碼（取代 `dfp_code`）。
+> `data[].type`：項目類型，`news` 為文章、`dfp` 為 DFP 廣告、`ad` 為一般圖片廣告。
+> `data[].code`：文章或一般廣告 ID；`type` 為 `dfp` 時，`code` 為 DFP 廣告單元代碼（取代 `dfp_code`）。
 > `data[].title`：文章標題或 Banner 標題。
 > `data[].image`：文章圖片或 Banner 圖片網址。
 > `data[].url`：新聞 URL 或 Banner URL。
 > `data[].dfp_size`：DFP 廣告尺寸陣列，例如 `100x100`、`100x50`；非 DFP 項目為 `null`。
-> `data[].is_ad`：是否為一般廣告，`Y` 是、`N` 否。
 
 ---
 
@@ -629,35 +634,33 @@
 > `ip_address`：裝置目前的 IP 位址，無法取得時傳空字串。
 > `param.code`：APP 專屬活動 ID。
 
-**Response data**：APP 專屬活動題目陣列
+**Response data**：APP 專屬活動題目
 ```json
 {
     "response": "app_event_content",
     "platform": "ios",
     "result": "success",
     "message": "",
-    "data": [
-        {
-            "type": "text",
-            "code": "1",
-            "title": "活動題目",
-            "options": [
-                {
-                    "label": "選項文字或圖片網址",
-                    "value": "1",
-                    "image_desc": "圖片描述"
-                }
-            ]
-        }
-    ]
+    "data": {
+        "type": 1,
+        "code": 1052,
+        "title": "活動題目",
+        "options": [
+            {
+                "label": "選項文字或圖片網址",
+                "value": 1177,
+                "image_desc": "圖片描述"
+            }
+        ]
+    }
 }
 ```
-> `data[].type`：題目類型；`text` 為純文字、`image` 為純圖片、`text_image` 為文字加圖片。
-> `data[].code`：活動代碼。
-> `data[].title`：活動標題或題目文字。
-> `data[].options[].label`：選項文字或圖片網址。
-> `data[].options[].value`：選項值。
-> `data[].options[].image_desc`：圖片描述，`type == "text_image"` 時會有值。
+> `data.type`：題目類型（數字）；`1` 為純文字、`2` 為純圖片、`3` 為文字加圖片。
+> `data.code`：活動代碼。
+> `data.title`：活動標題或題目文字。
+> `data.options[].label`：選項文字或圖片網址。
+> `data.options[].value`：選項值（數字），送出答案時填入 `app_event_answer` 的 `value`。
+> `data.options[].image_desc`：圖片描述，`type == 3` 時會有值；其餘型別回空字串。
 
 ---
 
@@ -968,3 +971,208 @@
 > `data[].code`：YouTube 影片代碼。
 > `data[].title`：影片標題。
 > `data[].video_desc`：影片描述。
+
+---
+
+## 19. web_event_list（網頁活動）
+
+**API Path**：`/api/mobileapi/web_event_list`
+
+**參考**：同舊 API 的 `web_event_list`。
+
+**Request**
+```json
+{
+    "request": "web_event_list",
+    "platform": "ios",
+    "ip_address": ""
+}
+```
+> `request`：API 名稱，固定為 `web_event_list`。
+> `platform`：呼叫平台，目前 App 使用 `ios`。
+> `ip_address`：裝置目前的 IP 位址，無法取得時傳空字串。
+
+**Response data**：網頁活動列表
+```json
+{
+    "response": "web_event_list",
+    "platform": "ios",
+    "result": "success",
+    "message": "",
+    "data": {
+        "total_count": 5,
+        "events": [
+            {
+                "id": "162",
+                "image": "http://.../event.jpg",
+                "title": "活動標題",
+                "summary": "",
+                "acttime_text": "1234",
+                "event_date_begin": "2023/09/01",
+                "event_date_end": "2026/12/31",
+                "publish_winners_date": "",
+                "reply_date": "",
+                "is_on": "Y",
+                "is_reply": "N",
+                "reply_url": "http://.../Event/Winners/162",
+                "is_publish": "N",
+                "openlink": "N",
+                "url": "http://.../Event/Content/162",
+                "is_top": "N",
+                "is_publish_coming": "N"
+            }
+        ]
+    }
+}
+```
+> `total_count`：活動總數。
+> `events.id`：活動 ID。
+> `events.image`：活動封面圖網址。
+> `events.title`：活動標題。
+> `events.summary`：活動摘要，未設定時為空字串。
+> `events.acttime_text`：活動時間文字說明。
+> `events.event_date_begin` / `events.event_date_end`：活動開始及結束日期，格式為 `yyyy/MM/dd`。
+> `events.publish_winners_date`：公布得獎名單日期，未設定時為空字串。
+> `events.reply_date`：兌獎/回覆日期，未設定時為空字串。
+> `events.is_on`：活動是否開放，值為 `Y` / `N`。
+> `events.is_reply`：是否可回覆/兌獎，值為 `Y` / `N`。
+> `events.reply_url`：得獎名單頁網址。
+> `events.is_publish`：是否已公布得獎名單，值為 `Y` / `N`。
+> `events.openlink`：是否以外部連結開啟，值為 `Y` / `N`。
+> `events.url`：活動內容頁網址。
+> `events.is_top`：是否置頂，值為 `Y` / `N`。
+> `events.is_publish_coming`：得獎名單是否即將公布，值為 `Y` / `N`。
+
+---
+
+## 20. ad_record（點閱次數記錄）
+
+記錄廣告／圖片素材的點擊次數。
+
+**API Path**：`/api/mobileapi/ad_record`
+
+**Request**
+```json
+{
+    "request": "ad_record",
+    "platform": "ios",
+    "ip_address": "",
+    "param": {
+        "type": "pic_link",
+        "kind": "click",
+        "code": "影片SID"
+    }
+}
+```
+> `request`：API 名稱，固定為 `ad_record`。
+> `platform`：呼叫平台，傳 `ios` 或 `android`。
+> `ip_address`：裝置目前的 IP 位址，無法取得時傳空字串。
+> `param.type`：素材類型，必填。
+> `param.kind`：操作類型，點擊時固定傳 `click`。
+> `param.code`：影片 SID。
+
+**`param.type` 可用值**
+
+| 值 | Banner 類型 |
+| --- | --- |
+| `pic_link` | 圖片加 URL。 |
+| `game_link` | 圖片加活動，點擊後開啟「遊戲」頁。 |
+| `pic` | 純圖片。 |
+
+**Response data**：`Y` / `N`
+```json
+{
+    "response": "ad_record",
+    "platform": "ios",
+    "result": "success",
+    "message": "",
+    "data": "Y"
+}
+```
+> `data`：`Y` 表示記錄成功；`N` 表示記錄失敗。
+
+## 21. get_app_dfp（DFP 廣告）
+
+**Request**
+```json
+{
+    "request": "get_app_dfp",
+    "platform": "ios",
+    "ip_address": "",
+    "param": {
+        "type": "home_top"
+    }
+}
+```
+> `request`：API 名稱，固定為 `get_app_dfp`。
+> `platform`：呼叫平台，傳 `ios` 或 `android`。
+> `ip_address`：裝置目前的 IP 位址，無法取得時傳空字串。
+> `param.type`：DFP 版位，必填。
+
+**`param.type` 可用值**
+
+| 值 | 版位 |
+| --- | --- |
+| `home_top` | 首頁上方。 |
+| `home_bottom` | 首頁下方。 |
+
+**Response**
+```json
+{
+    "response": "get_app_dfp",
+    "platform": "ios",
+    "result": "success",
+    "message": "",
+    "data": {
+        "dfp_code": "",
+        "dfp_size": ["100x100", "100x50"]
+    }
+}
+```
+> `data.dfp_code`：DFP 廣告單元代碼。
+> `data.dfp_size`：可用的廣告尺寸清單，格式為 `寬x高`。
+
+---
+
+## 22. app_start_banner（APP 蓋板廣告）
+
+**API Path**：`/api/mobileapi/app_start_banner`
+
+**Request**
+```json
+{
+    "request": "app_start_banner",
+    "platform": "ios",
+    "ip_address": ""
+}
+```
+> `request`：API 名稱，固定為 `app_start_banner`。
+> `platform`：呼叫平台，傳 `ios` 或 `android`。
+> `ip_address`：裝置目前的 IP 位址，無法取得時傳空字串。
+
+**Response**
+```json
+{
+    "response": "app_start_banner",
+    "platform": "ios",
+    "result": "success",
+    "message": "",
+    "data": {
+        "banner_type": "banner",
+        "banner_image": "https://example.com/banner.jpg",
+        "link_url": "https://example.com",
+        "banner_code": "1",
+        "banner_kind": "inside",
+        "event_code": ""
+    }
+}
+```
+
+| 欄位 | 說明 |
+| --- | --- |
+| `data.banner_type` | 蓋板類型：`choice`（選擇題）、`point`（集點）或 `banner`（廣告）。 |
+| `data.banner_image` | 圖片網址。 |
+| `data.link_url` | `banner_type` 為 `banner` 時的圖片連結。 |
+| `data.banner_code` | Banner SID。 |
+| `data.banner_kind` | Banner 開啟方式：`inside`（站內）或 `outside`（站外）。 |
+| `data.event_code` | `banner_type` 為 `choice` 或 `point` 時的活動 ID。 |
